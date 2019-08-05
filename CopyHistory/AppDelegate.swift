@@ -13,16 +13,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var StatusMenu: NSMenu!
     
-     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
+    
+    let clipboard = Clipboard()
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         //statusItem.button?.image = NSImage(named: NSImage.Name(rawValue:"ddd"))
         statusItem.button?.title = "copy"
         statusItem.menu = StatusMenu
-
+        print("hell world")
+        clipboard.startListening()
+        clipboard.onNewCopy { (content) in
+                print(content)
+        }
+    
     }
-
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
