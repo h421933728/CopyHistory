@@ -23,7 +23,7 @@
                 <menuItem title="Quit" id="92x-5z-jsZ">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="quitClicked:" target="Voe-Tx-rLC" id="F4p-fk-7ev"/>
+                        <action selector="quitClicked:" target="Voe-Tx-rLC" id="cPf-mG-geb"/>
                     </connections>
                 </menuItem>
             </items>

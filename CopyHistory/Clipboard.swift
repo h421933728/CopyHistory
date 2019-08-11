@@ -7,11 +7,13 @@ class Clipboard {
     private let pasteboard = NSPasteboard.general
     private let timerInterval = 1.0
     
+    private var lastWriteContent: String
     private var changeCount: Int
     private var hooks: [Hook]
     
     init() {
         changeCount = pasteboard.changeCount
+        lastWriteContent = ""
         hooks = []
     }
     
@@ -27,8 +29,7 @@ class Clipboard {
                              repeats: true)
     }
     
-    func copy(_ string: String) {
-        pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
+    func copy(_ string: String) {        pasteboard.declareTypes([NSPasteboard.PasteboardType.string], owner: nil)
         pasteboard.setString(string, forType: NSPasteboard.PasteboardType.string)
     }
     
