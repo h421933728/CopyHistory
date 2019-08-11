@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import HotKey
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -17,6 +18,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     let clipboard = Clipboard()
     var copyStringMap = [NSMenuItem: String]()
+
+    let hotKey = HotKey(key: .c, modifiers: [.command])
+
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -30,6 +34,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.handleCopyEvent(content: content)
         }
 
+        hotKey.keyDownHandler = {
+            print("dddd")
+        }
+
+    }
+
+    @IBAction func statusItemAction(_ sender: AnyObject) {
+       // NSRunningApplication.current.activate(options: NSApplication.ActivationOptions.activateIgnoringOtherApps)
+       // let window = NSApp.windows[0]
+       // window.orderFront(self)
+
+         // NSApp.activate(ignoringOtherApps: true)
+        // NSApp.activate(ignoringOtherApps: true)
     }
 
     func handleCopyEvent(content:String) {
@@ -47,10 +64,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.statusMenu.removeItem(remove_item!)
             self.copyStringMap.removeValue(forKey: remove_item!)
         }
+        let new_content = content.trimmingCharacters(in: .whitespaces)
+        let subStringTo18 = String(new_content.prefix(18))
 
-        let item = NSMenuItem(title: content, action: #selector(AppDelegate.menuItemClick(_:)), keyEquivalent: "")
+        let item = NSMenuItem(title: subStringTo18, action: #selector(AppDelegate.menuItemClick(_:)), keyEquivalent: "")
         self.statusMenu.insertItem(item, at: 0)
+
         self.copyStringMap[item] = content
+
+        var index = 0
+        for item in self.statusMenu.items {
+            if index >= 10 || index >= (self.statusMenu.items.count - 1) {
+                break
+            }
+            //NSLog("len:%d", self.statusMenu.items.count)
+            item.keyEquivalent = String(index)
+            index = index + 1
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -69,5 +99,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.clipboard.copy(str)
         }
     }
+
+    @IBAction func PreferencesClicked(_ sender: NSMenuItem) {
+    }
+
 }
 
