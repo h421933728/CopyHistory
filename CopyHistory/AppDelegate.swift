@@ -55,6 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if content == value {
                 self.statusMenu.removeItem(item)
                 self.statusMenu.insertItem(item, at: 0)
+                changeKeyEquivalent()
                 return
             }
         }
@@ -72,6 +73,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         self.copyStringMap[item] = content
 
+        changeKeyEquivalent()
+    }
+
+    func changeKeyEquivalent(){
         var index = 0
         for item in self.statusMenu.items {
             if index >= 10 || index >= (self.statusMenu.items.count - 2) {
